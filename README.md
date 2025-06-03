@@ -99,4 +99,4 @@ V: JSON szerkesztés. Ha nem tudod mi az, akkor... Google is your friend.
 
 ---
 
-*Készítette: Valaki, aki tudja hogy néz ki egy számítógép belülről. 2024-ben, amikor még létezett az internet.* 
+*Készítette: Valaki, aki tudja hogy néz ki egy számítógép belülről. 2025-ben, amikor még létezett az internet.* 
