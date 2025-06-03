@@ -39,12 +39,30 @@
             }
         },
         {
-            "id": 4,
+            "id": 5,
             "question": {
                 "text": "job shop, open shop és flow shop ütemezési feladatok közti különbségek"
             },
             "answer": {
                 "image": "theories/5.png"
+            }
+        },
+        {
+            "id": 6,
+            "question": {
+                "text": "rajzolj egy 5 pontból és 6 élből álló páros gráfot"
+            },
+            "answer": {
+                "image": "theories/6.png"
+            }
+        },
+        {
+            "id":  7,
+            "question": {
+                "text": "FIFO algoritmussal 1, 2, 3, 5 elemeket raktuk ilyen sorba, milyen sorba vehetjük ki őket?"
+            },
+            "answer": {
+                "image": "theories/7.png"
             }
         }
         

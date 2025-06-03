@@ -1,146 +1,102 @@
 # 🌿 Gazdasági informatika - Feladatok
 
-Modern, responsive webes alkalmazás gazdasági informatika feladatok és megoldások megjelenítésére. **Természetes tudás, modern technológiával** - Zöld-teal színpalettával és sötét akcentusokkal.
+## Mi a fene ez?
 
-## 🚀 Jellemzők
+Ez egy webes alkalmazás, ami azért született, hogy a gazdasági informatika feladatokat ne kelljen papírlapokon keresgélni, mint valami ősember. Modern technológiával, természetes tudással - meg persze egy csomó zöld színnel, mert a természet jó.
 
-- **🌱 Természet-inspirált design** - Zöld-teal gradiens háttér, sötét akcentusok
-- **Fully responsive** - Desktop és mobil optimalizálva
-- **Gombos navigáció** - Intuitív feladat típus és feladat váltás
-- **Két oszlopos layout** - Desktop: kérdés bal oldal, válasz jobb oldal
-- **Mobil optimalizált** - Minimális padding, teljes képernyő kihasználás
-- **Keyboard shortcuts** - 1-4 számok feladat típus váltáshoz, nyíl billentyűk navigáláshoz
+## 🚀 Hogy működik ez a szörnyeteg?
 
-## 🎯 Technológiák
+### Alapvetően így megy:
+1. **Bedobsz egy feladat típust** - Van 4 darab, mint a Beatles tagjai
+2. **Kiválasztasz egy konkrét feladatot** - Ha van több, mert néha lustábbak voltunk
+3. **Megnézed a feladatot** - Bal oldalon, mint ahogy olvasni szoktál
+4. **Csekkolod a megoldást** - Jobb oldalon, ha elakadtál
+5. **Nagyítod a képeket** - Mert ki tudja elolvasni azt a pici szöveget?
 
-- **HTML5** - Szemantikus markup
-- **CSS3** - Modern styling, flexbox, grid, nature-inspired gradients
-- **Vanilla JavaScript** - Dinamikus tartalom betöltés
-- **JSON** - Feladat adatok tárolása
-- **Poppins font** - Modern tipográfia
+### A nagy újítás 🎉
+**VÉGRE!** Ha a feladat képére kattintasz, nem tudsz átcsúszni a megoldás képeire! Mert mi értelme lenne a titoknak, ha egyből láthatnád a válaszokat? Ez olyan, mintha a keresztrejtvényben elölről olvasnád a megfejtéseket.
 
-## 📁 Fájl struktúra
+## 🎯 Navigáció (avagy hogyan ne tévedj el)
+
+- **1-4 számbillentyűk**: Feladat típus váltás (mint a TV csatornák)
+- **Nyíl billentyűk**: Feladatok között ugrálás (←→)
+- **Escape**: Modal bezárása (menekülés a nagyított képből)
+- **Egér**: Kattints bármire, ami gombnak néz ki
+
+## 🔧 Hogyan indítsd el ezt a szépséget?
+
+```bash
+# Ha van Python a gépeden (és miért ne lenne?)
+python -m http.server 8000
+
+# Aztán nyisd meg a böngésződben:
+http://localhost:8000
+```
+
+Ha nincs Python, akkor... hát, ideje lenne telepíteni, nem? 😏
+
+## 📁 Mi van ebben a mappában?
 
 ```
 gazdinfo/
-├── index.html          # Fő alkalmazás
-├── styles.css          # Természet-inspirált CSS stílusok
-├── tasks.json          # Feladat adatok
-├── images/             # Feladat képek
-│   ├── kerdes_1_1.png
-│   ├── valasz_1_1.png
-│   └── ...
-└── README.md           # Dokumentáció
+├── index.html          # A fő színhely, ahol minden történik
+├── theories.html       # Elméleti kérdések oldala 
+├── styles.css          # Szépítő cuccok (zöld mindenek)
+├── theories.css        # Elméleti kérdések stílusai
+├── tasks.json          # Itt laknak a feladatok
+├── theories.json       # Itt laknak az elméleti kérdések
+├── images/             # Feladat képek helye
+│   ├── kerdes_1_1.png  # Első típus első feladat képe
+│   ├── valasz_1_1.png  # És a hozzá tartozó válasz
+│   └── ...             # És így tovább, mint a végtelen
+├── theories/           # Elméleti kérdések válasz képei
+│   ├── 1.png           # Első elméleti kérdés válasza
+│   ├── 2.png           # Második elméleti kérdés válasza
+│   ├── ...             # És így tovább 7-ig
+│   └── 7.png           # Hetedik elméleti kérdés válasza
+└── README.md           # Ez itt, amit most olvasol
 ```
 
-## 🔧 Használat
+## 📚 Mi az az elméleti kérdések rész?
 
-1. **Helyi szerver indítása:**
-   ```bash
-   python -m http.server 8000
-   ```
+Ahogy a neve is mutatja, itt vannak az elméleti kérdések!
 
-2. **Böngészőben megnyitás:**
-   ```
-   http://localhost:8000
-   ```
+**Hogyan működik?**
+- Kattints a "📚 Elméleti kérdések" gombra a főoldalon
+- Látod a kérdéseket akordeon (harmonika) stílusban
+- Kattints egy kérdésre → megnyílik a válasz képpel
+- Van "Összes megnyitása/bezárása" gomb, ha lusták vagytok egyesével kattintgatni
 
-3. **Navigáció:**
-   - Feladat típus választás: 1-4 számozott gombok
-   - Feladatok között: kis számozott gombok vagy nyíl billentyűk
-   - Keyboard shortcuts: 1-4 (típus váltás), ←→ (navigáció)
+## 📱 Mobil kompatibilitás
 
-## 📱 Responsive Design
+Igen, mobilon is működik! Mert hát ki a fene ül ma már asztali gép előtt tanulni? A telefon a jövő, az asztali gép a múlt (kivéve ha játszani akarsz, de az más tészta).
 
-### Desktop (1200px+)
-- Két oszlopos layout
-- Nagy gombok (65px)
-- Bőséges padding-ek
+## 🎨 Miért zöld minden?
 
-### Tablet (768px-1200px)
-- Egy oszlopos layout
-- Közepes gombok (55px)
-- Adaptív spacing
-
-### Mobil (480px-768px)
-- Kompakt design
-- Kis gombok (50px)
-- Minimális padding-ek
-- Teljes szélességű képek
-
-### Kis mobil (-480px)
-- Ultra kompakt
-- Extra kis gombok (32px)
-- 5px padding-ek
-- Optimalizált tipográfia
-
-## 🎨 Design System - Természet Téma
-
-### Színpaletta
-- **Primary**: #16a085 (teal)
-- **Secondary**: #27ae60 (emerald zöld)
-- **Dark**: #1a252f (sötét erdei)
-- **Accent**: #00d2ff (világos teal)
-- **Gradients**: Erdei zöld → Teal → Emerald átmenetek
-- **Text**: #1a252f (természetes sötét)
-
-### Tipográfia
-- **Font**: Poppins (Google Fonts)
-- **Weights**: 400, 500, 600, 700, 800
-- **Responsive**: 1.8rem → 1.1rem
-
-### Természetes Komponensek
-- **Gombok**: Zöld gradiens, hover animációk
-- **Kártyák**: Természetes árnyékok, organikus kerekítések
-- **Képek**: Responsive, természetes keretezés
-- **Színes szekciók**: Erdei zöld (kérdések) + Teal (válaszok)
-
-## 📊 Feladat típusok
-
-1. **🌱 Első feladat típus** - Matematikai optimalizációs feladatok
-2. **🌿 Második feladat típus** - Ütemezés gráf Gantt diagramjának és komponens gráfjainak meghatározása
-3. **🍃 Harmadik feladat típus** - Folyamhálózat-szintézis probléma
-4. **🌳 Negyedik feladat típus** - Folyamat szintézis probléma
+Mert a természet zöld. A pénz is zöld. A gazdasági informatika is... oké, ez nem zöld, de legalább a weblap az. Plusz jól néz ki, és ki nem szereti a természetet? (Retorikiai kérdés volt.)
 
 ## 🛠️ Testreszabás
 
-### Új feladat típus hozzáadása
-1. `tasks.json` szerkesztése
-2. Új típus objektum létrehozása
-3. Feladatok hozzáadása a `tasks` tömbhöz
+Ha új feladatot akarsz hozzáadni:
+1. Szerkeszd a `tasks.json`-t
+2. Dobd be a képeket az `images/` mappába
+3. Imádkozz, hogy minden jól működjön
+4. Ha nem, akkor legalább tanultál valamit
 
-### Képek hozzáadása
-1. Képek elhelyezése az `images/` mappába
-2. JSON-ban a kép útvonal frissítése
-3. Támogatott formátumok: PNG, JPG, SVG
+## 🤷 Gyakran Ismételt Kérdések
 
-### Színpaletta módosítás
-1. `styles.css` szerkesztése
-2. CSS változók módosítása (`:root` szekcióban)
-3. Természetes színek: zöldek, tealek, erdei színek
+**K: Miért nem látom a képeket?**
+V: Mert valószínűleg nem indítottad el szerverről. Ez nem egy Word dokumentum.
 
-## 📖 Fejlesztési jegyzetek
+**K: Miért olyan lassú?**
+V: Talán mert 1998-ból való a internetod? Vagy csak túl sok Chrome tabot nyitottál meg.
 
-- **CSS Grid** és **Flexbox** kombinációja
-- **Mobile-first** responsive design
-- **Természet-inspirált CSS változók** konzisztens stílus érdekében
-- **Vanilla JS** - minimális függőségek
-- **Accessibility** támogatás (focus outline-ok)
-- **Zöld-teal color scheme** - természetes, modern megjelenés
+**K: Miért zöld minden?**
+V: Lásd fentebb. Természet. Pénz. Stílusos. Érted.
 
-## 🚀 Jövőbeli fejlesztések
-
-- [ ] Sötét erdei téma (dark mode)
-- [ ] Keresés funkció természetes ikonokkal
-- [ ] Bookmark rendszer
-- [ ] Export funkció
-- [ ] Offline támogatás
-- [ ] Progress tracking zöld progress barokkal
-
-## 📞 Kapcsolat
-
-**🌿 Természetes tudás, modern technológiával** - Gazdasági informatika feladatgyűjtemény
+**K: Hogyan adok hozzá új feladatot?**
+V: JSON szerkesztés. Ha nem tudod mi az, akkor... Google is your friend.
 
 ---
 
-*Készítve természet-inspirált design-nal és modern web technológiákkal* 🌱💻 
+*Készítette: Valaki, aki tudja hogy néz ki egy számítógép belülről. 2024-ben, amikor még létezett az internet.* 
