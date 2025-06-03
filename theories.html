@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Elméleti kérdések - Gazdasági informatika</title>
+    <link rel="stylesheet" href="theories.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="theories-container">
+        <div class="theories-header">
+            <div class="header-content">
+                <div class="back-button">
+                    <a href="index.html" class="back-link">← Vissza a feladatokhoz</a>
+                </div>
+                <div class="header-main">
+                    <div class="logo">🌿</div>
+                    <div class="title-section">
+                        <h1 id="theoriesTitle">Elméleti kérdések</h1>
+                        <p id="theoriesSubtitle">Gazdasági informatika alapfogalmak és elméletek</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="theories-controls">
+            <div class="controls-container">
+                <button id="expandAllBtn" class="control-button expand">
+                    📖 Összes válasz megnyitása
+                </button>
+                <button id="collapseAllBtn" class="control-button collapse">
+                    📚 Összes válasz bezárása
+                </button>
+                <div class="theories-counter">
+                    <span id="theoriesCount">6 elméleti kérdés</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="theories-content">
+            <div class="loading" id="loading">
+                🌿 Elméleti kérdések betöltése...
+            </div>
+            
+            <div id="theoriesContainer" class="theories-list" style="display: none;">
+                <!-- Accordion items will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Modal Viewer -->
+    <div id="imageModal" class="image-modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeImageModal()">×</button>
+            <button class="modal-nav prev" onclick="prevModalImage()">‹</button>
+            <img id="modalImage" class="modal-image" src="" alt="Nagyított kép">
+            <button class="modal-nav next" onclick="nextModalImage()">›</button>
+            <div id="modalInfo" class="modal-info">1 / 1</div>
+        </div>
+    </div>
+
+    <script>
+        // Application state
+        let theoriesData = null;
+        let modalImages = [];
+        let currentModalIndex = 0;
+
+        // Initialize application
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTheoriesData();
+        });
+
+        // Load theories data from JSON file
+        async function loadTheoriesData() {
+            try {
+                const response = await fetch('theories.json');
+                if (!response.ok) {
+                    throw new Error('Nem sikerült betölteni az elméleti kérdéseket');
+                }
+                
+                theoriesData = await response.json();
+                populateTheories();
+                
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('theoriesContainer').style.display = 'block';
+                
+            } catch (error) {
+                console.error('Hiba:', error);
+                showError('Hiba történt az elméleti kérdések betöltésekor: ' + error.message);
+            }
+        }
+
+        function populateTheories() {
+            // Update header
+            document.getElementById('theoriesTitle').textContent = theoriesData.title;
+            document.getElementById('theoriesSubtitle').textContent = theoriesData.subtitle;
+            document.getElementById('theoriesCount').textContent = `${theoriesData.questions.length} elméleti kérdés`;
+
+            // Create accordion items
+            const container = document.getElementById('theoriesContainer');
+            container.innerHTML = '';
+
+            theoriesData.questions.forEach((item, index) => {
+                const accordionItem = createAccordionItem(item, index);
+                container.appendChild(accordionItem);
+            });
+        }
+
+        function createAccordionItem(item, index) {
+            const div = document.createElement('div');
+            div.className = 'accordion-item';
+            div.innerHTML = `
+                <div class="accordion-header" onclick="toggleAccordion(${index})">
+                    <div class="question-content">
+                        ${renderQuestionContent(item.question)}
+                    </div>
+                    <div class="accordion-toggle">
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                </div>
+                <div class="accordion-body" id="accordion-body-${index}">
+                    <div class="answer-content">
+                        ${renderAnswerContent(item.answer)}
+                    </div>
+                </div>
+            `;
+            return div;
+        }
+
+        function renderQuestionContent(question) {
+            let html = '<div class="question-wrapper">';
+            
+            if (question.text) {
+                html += `<div class="question-text">❓ ${question.text}</div>`;
+            }
+            
+            if (question.image) {
+                html += `<div class="question-image">
+                    <img src="${question.image}?t=${Date.now()}" alt="Kérdés kép" 
+                         loading="lazy" data-image-path="${question.image}" data-image-index="0">
+                </div>`;
+            }
+            
+            html += '</div>';
+            return html;
+        }
+
+        function renderAnswerContent(answer) {
+            let html = '<div class="answer-wrapper">';
+            
+            if (answer.text) {
+                const formattedText = answer.text
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\n/g, '<br>');
+                html += `<div class="answer-text">✅ ${formattedText}</div>`;
+            }
+            
+            if (answer.image) {
+                html += `<div class="answer-image">
+                    <img src="${answer.image}?t=${Date.now()}" alt="Válasz kép" 
+                         loading="lazy" data-image-path="${answer.image}" data-image-index="0">
+                </div>`;
+            }
+            
+            html += '</div>';
+            return html;
+        }
+
+        // Accordion functionality
+        function toggleAccordion(index) {
+            const body = document.getElementById(`accordion-body-${index}`);
+            const item = body.parentElement;
+            const icon = item.querySelector('.toggle-icon');
+            
+            if (item.classList.contains('active')) {
+                item.classList.remove('active');
+                body.style.maxHeight = null;
+                icon.textContent = '▼';
+            } else {
+                item.classList.add('active');
+                body.style.maxHeight = body.scrollHeight + 'px';
+                icon.textContent = '▲';
+            }
+        }
+
+        // Expand/Collapse all functionality
+        document.getElementById('expandAllBtn').addEventListener('click', function() {
+            const items = document.querySelectorAll('.accordion-item');
+            items.forEach((item, index) => {
+                if (!item.classList.contains('active')) {
+                    toggleAccordion(index);
+                }
+            });
+        });
+
+        document.getElementById('collapseAllBtn').addEventListener('click', function() {
+            const items = document.querySelectorAll('.accordion-item');
+            items.forEach((item, index) => {
+                if (item.classList.contains('active')) {
+                    toggleAccordion(index);
+                }
+            });
+        });
+
+        // Image Modal Functions (reused from main app)
+        function openImageModal(imagePath, index) {
+            modalImages = [imagePath];
+            currentModalIndex = 0;
+            
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalInfo = document.getElementById('modalInfo');
+            
+            modalImage.src = imagePath + '?t=' + Date.now();
+            modalInfo.textContent = '1 / 1';
+            
+            modal.classList.add('active');
+            
+            // Hide navigation for single images
+            const prevBtn = modal.querySelector('.prev');
+            const nextBtn = modal.querySelector('.next');
+            prevBtn.style.display = 'none';
+            nextBtn.style.display = 'none';
+        }
+
+        function closeImageModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('active');
+        }
+
+        // Image click handler
+        document.addEventListener('click', function(event) {
+            if (event.target.tagName === 'IMG' && event.target.dataset.imagePath) {
+                const imagePath = event.target.dataset.imagePath;
+                openImageModal(imagePath, 0);
+            }
+        });
+
+        // Keyboard support
+        document.addEventListener('keydown', function(event) {
+            const modal = document.getElementById('imageModal');
+            if (modal.classList.contains('active') && event.key === 'Escape') {
+                closeImageModal();
+            }
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('imageModal').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeImageModal();
+            }
+        });
+
+        function showError(message) {
+            const loading = document.getElementById('loading');
+            loading.className = 'error';
+            loading.innerHTML = `❌ ${message}`;
+        }
+    </script>
+</body>
+</html> 

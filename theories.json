@@ -1,0 +1,52 @@
+{
+    "title": "🌿 Elméleti kérdések",
+    "subtitle": "Gazdasági informatika alapfogalmak és elméletek",
+    "questions": [
+        {
+            "id": 1,
+            "question": {
+                "text": "Írja le az S-gráfnál alkalmazott Branch and Bound (korlátozás és szétválasztás) eljárás korlátozó lépését/feltételeket!"
+            },
+            "answer": {
+                "image": "theories/1.png"
+            }
+        },
+        {
+            "id": 2,
+            "question": {
+                "text": "Az ütemezési problémánál hasonlítsa össze pár mondattal a berendezés alapú és a taszk alapú döntési stratégiát!"
+            },
+            "answer": {
+                "image": "theories/2.png"
+            }
+        },
+        {
+            "id": 3,
+            "question": {
+                "text": "Írja le a P-gráfnál alkalmazott MSG (Maximal Structure Generation) algoritmus építő fázisát!"
+            },
+            "answer": {
+                "image": "theories/3.png"
+            }
+        },
+        {
+            "id": 4,
+            "question": {
+                "text": "A P gráfban milyen anyag típusú csúcsokat különböztetünk meg. 1-1 mondattal ismertes is őket!"
+            },
+            "answer": {
+                "image": "theories/4.png"
+            }
+        },
+        {
+            "id": 4,
+            "question": {
+                "text": "job shop, open shop és flow shop ütemezési feladatok közti különbségek"
+            },
+            "answer": {
+                "image": "theories/5.png"
+            }
+        }
+        
+    ]
+} 

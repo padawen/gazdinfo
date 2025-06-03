@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Gazdasági informatika - Feladatok</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <div class="logo">🌿</div>
+                <h1>Gazdasági informatika</h1>
+                <p>Természetes tudás, modern technológiával</p>
+            </div>
+        </div>
+
+        <div class="task-type-selector">
+            <div class="selector-container">
+                <label class="selector-label">🌱 Válassz feladat típust:</label>
+                <div class="task-type-buttons" id="taskTypeButtons">
+                    <!-- Buttons will be generated here -->
+                </div>
+                <div class="theories-link">
+                    <a href="theories.html" class="theories-button">📚 Elméleti kérdések</a>
+                </div>
+                <!-- Hidden dropdown for compatibility -->
+                <select id="taskTypeSelect" class="task-type-dropdown" style="display: none;">
+                    <option value="">-- Válassz feladat típust --</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="content-container">
+            <div class="loading" id="loading">
+                🌿 Feladat típusok betöltése...
+            </div>
+
+            <div id="taskContent" style="display: none;">
+                <div id="taskTypeInfo" class="task-type-info">
+                    <!-- Task type info will be loaded here -->
+                </div>
+
+                <div id="navigationContainer" class="navigation-container">
+                    <div class="task-counter" id="taskCounter">
+                        🌱 <span id="taskTypeTitle">Feladat</span>:
+                    </div>
+                    <div class="task-nav-buttons" id="taskNavButtons">
+                        <!-- Task navigation buttons will be generated here -->
+                    </div>
+                </div>
+
+                <div id="taskContainer">
+                    <!-- Tasks will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Modal Viewer -->
+    <div id="imageModal" class="image-modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeImageModal()">×</button>
+            <button class="modal-nav prev" onclick="prevModalImage()">‹</button>
+            <img id="modalImage" class="modal-image" src="" alt="Nagyított kép">
+            <button class="modal-nav next" onclick="nextModalImage()">›</button>
+            <div id="modalInfo" class="modal-info">1 / 1</div>
+        </div>
+    </div>
+
+    <script>
+        // Application state
+        let taskData = null;
+        let currentTaskType = null;
+        let currentTaskIndex = 0;
+
+        // Modal state
+        let modalImages = [];
+        let currentModalIndex = 0;
+
+        // Initialize application
+        document.addEventListener('DOMContentLoaded', function() {
+            clearCache();
+            loadTaskData();
+        });
+
+        // URL parameter handling
+        function getUrlParams() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return {
+                type: urlParams.get('type'),
+                task: urlParams.get('task')
+            };
+        }
+
+        function updateUrl(taskTypeId, taskIndex) {
+            const url = new URL(window.location);
+            if (taskTypeId) {
+                url.searchParams.set('type', taskTypeId);
+            } else {
+                url.searchParams.delete('type');
+            }
+            
+            if (taskIndex !== null && taskIndex !== undefined) {
+                url.searchParams.set('task', taskIndex + 1); // 1-based for URL
+            } else {
+                url.searchParams.delete('task');
+            }
+            
+            history.pushState(null, '', url);
+        }
+
+        function loadFromUrl() {
+            const params = getUrlParams();
+            
+            if (params.type && taskData) {
+                const taskType = taskData.taskTypes.find(type => type.id === params.type);
+                if (taskType) {
+                    // Find and activate the corresponding button
+                    const buttons = document.querySelectorAll('.task-type-button');
+                    const buttonIndex = taskData.taskTypes.findIndex(type => type.id === params.type);
+                    
+                    if (buttons[buttonIndex]) {
+                        selectTaskType(params.type, buttons[buttonIndex]);
+                        
+                        // Load specific task if specified
+                        if (params.task) {
+                            const taskIndex = parseInt(params.task) - 1; // Convert to 0-based
+                            if (taskIndex >= 0 && taskIndex < taskType.tasks.length) {
+                                setTimeout(() => {
+                                    const taskButtons = document.querySelectorAll('.task-nav-button');
+                                    if (taskButtons[taskIndex]) {
+                                        selectTask(taskIndex, taskButtons[taskIndex]);
+                                    }
+                                }, 100);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // Clear browser cache function
+        function clearCache() {
+            // Force reload of stylesheets
+            const links = document.querySelectorAll('link[rel="stylesheet"]');
+            links.forEach(link => {
+                const href = link.href;
+                link.href = href.split('?')[0] + '?t=' + Date.now();
+            });
+            
+            console.log('Cache cleared for stylesheets');
+        }
+
+        // Load task data from JSON file
+        async function loadTaskData() {
+            try {
+                const response = await fetch('tasks.json');
+                if (!response.ok) {
+                    throw new Error('Nem sikerült betölteni a feladat típusokat');
+                }
+                
+                taskData = await response.json();
+                populateTaskTypeButtons();
+                
+                document.getElementById('loading').style.display = 'none';
+                
+                // Load from URL parameters after data is loaded
+                loadFromUrl();
+                
+            } catch (error) {
+                console.error('Hiba:', error);
+                showError('Hiba történt a feladat típusok betöltésekor: ' + error.message);
+            }
+        }
+
+        function populateTaskTypeButtons() {
+            const buttonContainer = document.getElementById('taskTypeButtons');
+            buttonContainer.innerHTML = '';
+            
+            taskData.taskTypes.forEach((taskType, index) => {
+                const button = document.createElement('button');
+                button.className = 'task-type-button';
+                button.textContent = (index + 1).toString();
+                button.title = taskType.name;
+                button.onclick = () => selectTaskType(taskType.id, button);
+                buttonContainer.appendChild(button);
+            });
+        }
+
+        function selectTaskType(selectedId, buttonElement) {
+            // Remove active class from all buttons
+            document.querySelectorAll('.task-type-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Add active class to clicked button
+            buttonElement.classList.add('active');
+            
+            currentTaskType = taskData.taskTypes.find(type => type.id === selectedId);
+            currentTaskIndex = 0;
+
+            if (currentTaskType) {
+                showTaskTypeInfo();
+                document.getElementById('taskContent').style.display = 'block';
+                showTask(currentTaskIndex);
+                
+                // Update URL with task type and reset task index
+                updateUrl(selectedId, 0);
+                
+                // Smooth scroll to content
+                setTimeout(() => {
+                    document.getElementById('taskContent').scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }, 100);
+            }
+        }
+
+        // Legacy function for compatibility
+        function loadTaskType() {
+            // This function is kept for compatibility but not used
+        }
+
+        function showTaskTypeInfo() {
+            const infoContainer = document.getElementById('taskTypeInfo');
+            infoContainer.innerHTML = `
+                <div class="task-type-name">🎓 ${currentTaskType.name}</div>
+                <div class="task-type-description">${currentTaskType.description}</div>
+            `;
+
+            // Update task type title
+            document.getElementById('taskTypeTitle').textContent = currentTaskType.name;
+            
+            // Generate task navigation buttons
+            generateTaskNavButtons();
+            
+            // Show first task
+            showTask(currentTaskIndex);
+        }
+
+        function generateTaskNavButtons() {
+            const navContainer = document.getElementById('taskNavButtons');
+            navContainer.innerHTML = '';
+            
+            if (!currentTaskType || currentTaskType.tasks.length <= 1) {
+                return;
+            }
+            
+            currentTaskType.tasks.forEach((task, index) => {
+                const button = document.createElement('button');
+                button.className = 'task-nav-button';
+                button.textContent = (index + 1).toString();
+                button.title = `${index + 1}. feladat`;
+                button.onclick = () => selectTask(index, button);
+                
+                if (index === currentTaskIndex) {
+                    button.classList.add('active');
+                }
+                
+                navContainer.appendChild(button);
+            });
+        }
+
+        function selectTask(taskIndex, buttonElement) {
+            if (taskIndex === currentTaskIndex) return;
+            
+            // Remove active class from all task nav buttons
+            document.querySelectorAll('.task-nav-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Add active class to clicked button
+            buttonElement.classList.add('active');
+            
+            // Update current task index and show task
+            currentTaskIndex = taskIndex;
+            showTask(currentTaskIndex);
+            
+            // Update URL with current task type and task index
+            if (currentTaskType) {
+                updateUrl(currentTaskType.id, taskIndex);
+            }
+            
+            // Smooth scroll to task
+            setTimeout(() => {
+                document.querySelector('.task-card').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }, 100);
+        }
+
+        function showTask(index) {
+            if (!currentTaskType || index < 0 || index >= currentTaskType.tasks.length) {
+                return;
+            }
+
+            const task = currentTaskType.tasks[index];
+            const container = document.getElementById('taskContainer');
+            
+            container.innerHTML = `
+                <div class="task-card">
+                    <div class="task-content">
+                        <div class="question-section">
+                            <div class="section-title">📝 Feladat</div>
+                            ${renderContent(task.question)}
+                        </div>
+                        <div class="answer-section">
+                            <div class="section-title">✅ Megoldás</div>
+                            ${renderContent(task.answer)}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Update active button
+            updateTaskNavButtons();
+        }
+
+        function updateTaskNavButtons() {
+            document.querySelectorAll('.task-nav-button').forEach((btn, index) => {
+                if (index === currentTaskIndex) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        }
+
+        function renderContent(content) {
+            if (!content) {
+                return '<div class="no-content">Nincs tartalom</div>';
+            }
+
+            let html = '';
+            
+            if (content.text) {
+                html += `<div class="content-text">${content.text}</div>`;
+            }
+            
+            // Handle multiple images
+            const images = [];
+            if (content.image) images.push(content.image);
+            if (content.image2) images.push(content.image2);
+            if (content.image3) images.push(content.image3);
+            if (content.image4) images.push(content.image4);
+            
+            if (images.length > 0) {
+                console.log('Loading images:', images); // Debug log
+                // Store images globally for easy access
+                window.currentContentImages = images;
+                
+                const placeholderImage = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkjDoWxhc3oga8Opcmk8L3RleHQ+PC9zdmc+';
+                
+                html += `<div class="content-images ${images.length > 1 ? 'multiple-images' : ''}">`;
+                
+                images.forEach((imagePath, index) => {
+                    // Cache-busting: add timestamp to force reload
+                    const cacheBustingUrl = imagePath + '?t=' + Date.now();
+                    html += `
+                        <div class="content-image">
+                            <img src="${cacheBustingUrl}" alt="Tartalom kép ${index + 1}" 
+                                 onerror="this.src='${placeholderImage}';" 
+                                 loading="lazy"
+                                 data-image-path="${imagePath}"
+                                 data-image-index="${index}">
+                        </div>
+                    `;
+                });
+                
+                html += `</div>`;
+            }
+            
+            if (!content.text && images.length === 0) {
+                html = '<div class="no-content">Nincs tartalom</div>';
+            }
+            
+            return html;
+        }
+
+        // Image Modal Functions
+        function openImageModal(imagePath, index) {
+            modalImages = window.currentContentImages || [imagePath];
+            currentModalIndex = index;
+            
+            console.log('Opening modal:', imagePath, index, modalImages); // Debug
+            
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalInfo = document.getElementById('modalInfo');
+            
+            // Cache-busting for modal image too
+            modalImage.src = imagePath + '?t=' + Date.now();
+            modalInfo.textContent = `${currentModalIndex + 1} / ${modalImages.length}`;
+            
+            modal.classList.add('active');
+            
+            // Hide navigation if only one image
+            const prevBtn = modal.querySelector('.prev');
+            const nextBtn = modal.querySelector('.next');
+            
+            if (modalImages.length <= 1) {
+                prevBtn.style.display = 'none';
+                nextBtn.style.display = 'none';
+            } else {
+                prevBtn.style.display = 'flex';
+                nextBtn.style.display = 'flex';
+            }
+        }
+
+        function closeImageModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('active');
+        }
+
+        function prevModalImage() {
+            if (currentModalIndex > 0) {
+                currentModalIndex--;
+                updateModalImage();
+            }
+        }
+
+        function nextModalImage() {
+            if (currentModalIndex < modalImages.length - 1) {
+                currentModalIndex++;
+                updateModalImage();
+            }
+        }
+
+        function updateModalImage() {
+            const modalImage = document.getElementById('modalImage');
+            const modalInfo = document.getElementById('modalInfo');
+            
+            // Cache-busting for navigation too
+            modalImage.src = modalImages[currentModalIndex] + '?t=' + Date.now();
+            modalInfo.textContent = `${currentModalIndex + 1} / ${modalImages.length}`;
+        }
+
+        function nextTask() {
+            if (currentTaskIndex < currentTaskType.tasks.length - 1) {
+                const newIndex = currentTaskIndex + 1;
+                const buttons = document.querySelectorAll('.task-nav-button');
+                if (buttons[newIndex]) {
+                    selectTask(newIndex, buttons[newIndex]);
+                }
+            }
+        }
+
+        function prevTask() {
+            if (currentTaskIndex > 0) {
+                const newIndex = currentTaskIndex - 1;
+                const buttons = document.querySelectorAll('.task-nav-button');
+                if (buttons[newIndex]) {
+                    selectTask(newIndex, buttons[newIndex]);
+                }
+            }
+        }
+
+        function scrollToTop() {
+            document.querySelector('.task-card').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        function updateNavigation() {
+            // This function is now handled by updateTaskNavButtons
+            updateTaskNavButtons();
+        }
+
+        function showError(message) {
+            const loading = document.getElementById('loading');
+            loading.className = 'error';
+            loading.innerHTML = `❌ ${message}`;
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            // Modal navigation
+            const modal = document.getElementById('imageModal');
+            if (modal.classList.contains('active')) {
+                if (event.key === 'Escape') {
+                    closeImageModal();
+                } else if (event.key === 'ArrowLeft') {
+                    prevModalImage();
+                } else if (event.key === 'ArrowRight') {
+                    nextModalImage();
+                }
+                return;
+            }
+            
+            // Regular navigation (only if modal is not open)
+            if (!currentTaskType) return;
+            
+            if (event.key === 'ArrowLeft' && currentTaskIndex > 0) {
+                prevTask();
+            } else if (event.key === 'ArrowRight' && currentTaskIndex < currentTaskType.tasks.length - 1) {
+                nextTask();
+            }
+            
+            // Number key shortcuts for task type selection
+            if (event.key >= '1' && event.key <= '4') {
+                const buttonIndex = parseInt(event.key) - 1;
+                const buttons = document.querySelectorAll('.task-type-button');
+                if (buttons[buttonIndex]) {
+                    buttons[buttonIndex].click();
+                }
+            }
+        });
+
+        // Close modal when clicking outside the image
+        document.getElementById('imageModal').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeImageModal();
+            }
+        });
+
+        // Browser history navigation
+        window.addEventListener('popstate', function(event) {
+            if (taskData) {
+                loadFromUrl();
+            }
+        });
+
+        // Add smooth loading animation
+        window.addEventListener('load', function() {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+
+        // Add event listener for image clicks
+        document.addEventListener('click', function(event) {
+            if (event.target.tagName === 'IMG' && event.target.dataset.imagePath) {
+                const imagePath = event.target.dataset.imagePath;
+                const index = parseInt(event.target.dataset.imageIndex);
+                openImageModal(imagePath, index);
+            }
+        });
+    </script>
+</body>
+</html>

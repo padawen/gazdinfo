@@ -1,0 +1,154 @@
+{
+    "taskTypes": [
+        {
+            "id": "first_type",
+            "name": "Első feladat típus",
+            "description": "Matematikai optimalizációs feladatok",
+            "tasks": [
+                {
+                    "id": 1,
+                    "question": {
+                        "text": "Definiáld a maximális folyam problémát az alábbi irányított G(V,A) gráfon, amely egy szállító hálózatot reprezentál. Adja meg a matematikai modellt (1-es csúcs a forrás, 4-es a nyelő).",
+                        "image": "images/kerdes_1_1.png"
+                    },
+                    "answer": {
+                        "text": "A maximális folyam probléma matematikai modellje a következő...",
+                        "image": "images/valasz_1_1.png"
+                    }
+                },
+                {
+                    "id": 2,
+                    "question": {
+                        "text": "Definiáld a legrövidebb utat...",
+                        "image": "images/kerdes_1_2.png"
+                    },
+                    "answer": {
+                        "text": "Második feladat megoldása...",
+                        "image": "images/valasz_1_2.png"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "second_type", 
+            "name": "Második feladat típus",
+            "description": "Ütemezés gráf Gantt diagramjának és komponens gráfjainak meghatározása",
+            "tasks": [
+                {
+                    "id": 1,
+                    "question": {
+                        "text": "Add meg az alábbi ütemezés gráf Gantt diagramját és komponens gráfjait!",
+                        "image": "images/kerdes_2_1.png"
+                    },
+                    "answer": {
+                        "image": "images/valasz_2_1.png"
+                    }
+                },
+                {
+                    "id": 2,
+                    "question": {
+                        "text": "Add meg az alábbi recept gráfhoz egy helyes ütemezést és az ahhoz tartozó Gantt diagramot!",
+                        "image": "images/kerdes_2_2.png"
+                    },
+                    "answer": {
+                        "image": "images/valasz_2_2.png",
+                        "image2": "images/valasz_2_2_2.png"
+                    }
+                },
+                {
+                    "id": 3,
+                    "question": {
+                        "text": "Az alábbi recept-gráffal adott problémán mutassuk be a Taszk alapú döntési stratégiát! Adjuk meg a keresési fát, részfeladatokat, illetve az optimális ütemezést!",
+                        "image": "images/kerdes_2_3.png"
+                    },
+                    "answer": {
+                        "image": "images/valasz_2_3.png",
+                        "image2": "images/valasz_2_3_1.png"
+                    }
+                },
+                {
+                    "id": 4,
+                    "question": {
+                        "text": "Add meg az alábbi ütemezés gráf Gantt diagramját és komponens gráfjait!"
+                    },
+                    "answer": {
+                        "image": "images/valasz_2_4.png"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "third_type", 
+            "name": "Harmadik feladat típus",
+            "description": "Folyamhálózat-szintézis probléma",
+            "tasks": [
+                {
+                    "id": 1,
+                    "question": {
+                        "text": "Az alábbi táblázatokban definiált folyamhálózat-szintézis problémához adja meg a matematikai modellt(cél: minimális költség).",
+                        "image": "images/kerdes_3_1.png"
+                    },
+                    "answer": {
+                        "image": "images/valasz_3_1.png"
+                    }
+                },
+                {
+                    "id": 1,
+                    "question": {
+                        "text": "Az alábbi táblázatokban definiált folyamhálózat-szintézis problémához adja meg a matematikai modellt(cél: minimális költség).",
+                        "image": "images/kerdes_3_2.png"
+                    },
+                    "answer": {
+                        "image": "images/valasz_3_2.png"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "fourth_type", 
+            "name": "Negyedik feladat típus",
+            "description": "Folyamat szintézis probléma",
+            "tasks": [
+                {
+                    "id": 1,
+                    "question": {
+                        "text": "Vezesse vissza az alábbi minimális feszítőfa problémát egy folyamat szintézis problémára. Adja meg a P-gráfot, a folyamatok paramétereit, illetve a célt.",
+                        "image": "images/kerdes_4_1.png"
+                    },
+                    "answer": {
+                        "image": "images/valasz_4_1.png"
+                    }
+                },
+                {
+                    "id": 2,
+                    "question": {
+                        "text": "Vezesse vissza az alábbi legrövidebb utat egy folyamat szintézis problémára. Adja meg a P-gráfot, a folyamatok paramétereit, illetve a célt.",
+                        "image": "images/kerdes_4_2.png"
+                    },
+                    "answer": {
+                        "image": "images/valasz_4_2.png",
+                        "image2": "images/valasz_4_2_2.png"
+                    }
+                }
+            ]   
+        },
+        {
+            "id": "fifth_type", 
+            "name": "Ötödik feladat típus",
+            "description": "SSG",
+            "tasks": [
+                {
+                    "id": 1,
+                    "question": {
+                        "text": "Adja meg az SSG algoritmus eredményeit az alábbi P-gráfra.",
+                        "image": "images/kerdes_5_1.png"
+                    },
+                    "answer": {
+                        "image": "images/valasz_5_1.png",
+                        "image2": "images/valasz_5_1_2.png"
+                    }
+                }
+            ]   
+        }
+    ]
+} 
