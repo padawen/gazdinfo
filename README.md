@@ -7,7 +7,7 @@ Ez egy webes alkalmazás, ami azért született, hogy a gazdasági informatika f
 ## 🚀 Hogy működik ez a szörnyeteg?
 
 ### Alapvetően így megy:
-1. **Bedobsz egy feladat típust** - Van 4 darab, mint a Beatles tagjai
+1. **Bedobsz egy feladat típust** - Van több darab, mint a Beatles tagjai
 2. **Kiválasztasz egy konkrét feladatot** - Ha van több, mert néha lustábbak voltunk
 3. **Megnézed a feladatot** - Bal oldalon, mint ahogy olvasni szoktál
 4. **Csekkolod a megoldást** - Jobb oldalon, ha elakadtál
@@ -18,7 +18,7 @@ Ez egy webes alkalmazás, ami azért született, hogy a gazdasági informatika f
 
 ## 🎯 Navigáció (avagy hogyan ne tévedj el)
 
-- **1-4 számbillentyűk**: Feladat típus váltás (mint a TV csatornák)
+- **Számbillentyűk**: Feladat típus váltás (mint a TV csatornák)
 - **Nyíl billentyűk**: Feladatok között ugrálás (←→)
 - **Escape**: Modal bezárása (menekülés a nagyított képből)
 - **Egér**: Kattints bármire, ami gombnak néz ki
@@ -52,8 +52,8 @@ gazdinfo/
 ├── theories/           # Elméleti kérdések válasz képei
 │   ├── 1.png           # Első elméleti kérdés válasza
 │   ├── 2.png           # Második elméleti kérdés válasza
-│   ├── ...             # És így tovább 7-ig
-│   └── 7.png           # Hetedik elméleti kérdés válasza
+│   ├── ...             # És így tovább
+│   └── *.png           # Utolsó elméleti kérdés válasza
 └── README.md           # Ez itt, amit most olvasol
 ```
 
