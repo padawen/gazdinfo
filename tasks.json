@@ -7,19 +7,7 @@
             "tasks": [
                 {
                     "id": 1,
-                    "name": "Maximális folyam",
-                    "question": {
-                        "text": "Definiáld a maximális folyam problémát az alábbi irányított G(V,A) gráfon, amely egy szállító hálózatot reprezentál. Adja meg a matematikai modellt (1-es csúcs a forrás, 4-es a nyelő).",
-                        "image": "images/task_1/subtask_1/question.png"
-                    },
-                    "answer": {
-                        "text": "A maximális folyam probléma matematikai modellje a következő...",
-                        "image": "images/task_1/subtask_1/answer.png"
-                    }
-                },
-                {
-                    "id": 2,
-                    "name": "Minimális feszítő fa",
+                    "name": "Minimális feszítőfa",
                     "question": {
                         "text": "Definiáld a minimális feszítő fát az alábbi gráfon. Adja meg a matematikai modellt (1-es csúcs a kiindulás)",
                         "image": "images/task_1/subtask_3/question.png"
@@ -29,7 +17,7 @@
                     }
                 },
                 {
-                    "id": 3,
+                    "id": 2,
                     "name": "Legrövidebb út",
                     "question": {
                         "text": "Definiáld a legrövidebb út problémát az alábbi irányított gráfon, amely egy szállító hálózatot reprezentál.Adja meg a matematikai modellt (1-es csúcs a kiindulás, 4-es a cél)",
@@ -39,6 +27,18 @@
                         "image": "images/task_1/subtask_2/answer.png",
                         "image2": "images/task_1/subtask_2/answer_2.png",
                         "image3": "images/task_1/subtask_2/answer_3.png"
+                    }
+                },
+                {
+                    "id": 3,
+                    "name": "Max flow",
+                    "question": {
+                        "text": "Definiáld a maximális folyam problémát az alábbi irányított G(V,A) gráfon, amely egy szállító hálózatot reprezentál. Adja meg a matematikai modellt (1-es csúcs a forrás, 4-es a nyelő).",
+                        "image": "images/task_1/subtask_1/question.png"
+                    },
+                    "answer": {
+                        "text": "A maximális folyam probléma matematikai modellje a következő...",
+                        "image": "images/task_1/subtask_1/answer.png"
                     }
                 }
             ]
