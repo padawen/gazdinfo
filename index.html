@@ -128,22 +128,30 @@
             const urlParams = new URLSearchParams(window.location.search);
             return {
                 type: urlParams.get('type'),
+                section: urlParams.get('section'),
                 task: urlParams.get('task')
             };
         }
 
-        function updateUrl(taskTypeId, taskIndex) {
+        function updateUrl(taskTypeId, sectionIndex, taskIndex) {
             const url = new URL(window.location);
+            
+            // Töröljük az összes paramétert
+            url.searchParams.delete('type');
+            url.searchParams.delete('section');
+            url.searchParams.delete('task');
+            
+            // Helyes sorrendben adjuk hozzá
             if (taskTypeId) {
                 url.searchParams.set('type', taskTypeId);
-            } else {
-                url.searchParams.delete('type');
+            }
+            
+            if (sectionIndex !== null && sectionIndex !== undefined) {
+                url.searchParams.set('section', sectionIndex + 1);
             }
             
             if (taskIndex !== null && taskIndex !== undefined) {
-                url.searchParams.set('task', taskIndex + 1); // 1-based for URL
-            } else {
-                url.searchParams.delete('task');
+                url.searchParams.set('task', taskIndex + 1);
             }
             
             history.pushState(null, '', url);
@@ -162,8 +170,28 @@
                     if (buttons[buttonIndex]) {
                         selectTaskType(params.type, buttons[buttonIndex]);
                         
-                        // Load specific task if specified
-                        if (params.task) {
+                        // Load specific section and task if specified (subsections case)
+                        if (taskType.subsections && params.section !== null) {
+                            const sectionIndex = parseInt(params.section) || 0;
+                            const taskIndex = parseInt(params.task) || 0;
+                            
+                            setTimeout(() => {
+                                // Activate section button
+                                const sectionButtons = document.querySelectorAll('.section-button');
+                                if (sectionButtons[sectionIndex]) {
+                                    sectionButtons[sectionIndex].click();
+                                    
+                                    // Then activate task button
+                                    setTimeout(() => {
+                                        const taskButtons = document.querySelectorAll('.task-button');
+                                        if (taskButtons[taskIndex]) {
+                                            taskButtons[taskIndex].click();
+                                        }
+                                    }, 50);
+                                }
+                            }, 100);
+                        } else if (params.task) {
+                            // Regular task loading for non-subsections
                             const taskIndex = parseInt(params.task) - 1; // Convert to 0-based
                             if (taskIndex >= 0 && taskIndex < taskType.tasks.length) {
                                 setTimeout(() => {
@@ -245,7 +273,7 @@
                 showTask(currentTaskIndex);
                 
                 // Update URL with task type and reset task index
-                updateUrl(selectedId, 0);
+                updateUrl(selectedId, null, 0);
                 
                 // Smooth scroll to content
                 setTimeout(() => {
@@ -295,6 +323,8 @@
                         createTaskButtons(sectionIdx);
                         // Első feladatot mutatjuk
                         showSubsectionTask(sectionIdx, 0);
+                        // URL frissítése
+                        updateUrl(currentTaskType.id, sectionIdx, 0);
                     };
                     if (sectionIdx === 0) button.classList.add('active');
                     sectionButtonsDiv.appendChild(button);
@@ -334,6 +364,8 @@
                     button.classList.add('active');
                     // Feladat megjelenítése
                     showSubsectionTask(sectionIdx, taskIdx);
+                    // URL frissítése
+                    updateUrl(currentTaskType.id, sectionIdx, taskIdx);
                 };
                 if (taskIdx === 0) button.classList.add('active');
                 taskButtonsDiv.appendChild(button);
@@ -401,7 +433,7 @@
             
             // Update URL with current task type and task index
             if (currentTaskType) {
-                updateUrl(currentTaskType.id, taskIndex);
+                updateUrl(currentTaskType.id, null, taskIndex);
             }
             
             // Smooth scroll to task
