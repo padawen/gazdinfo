@@ -180,25 +180,11 @@ body {
 }
 
 .task-type-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(22, 160, 133, 0.3), transparent);
-    transition: left 0.6s;
-}
-
-.task-type-button:hover::before {
-    left: 100%;
+    /* Nincs hover effekt */
 }
 
 .task-type-button:hover {
-    background: var(--button-gradient);
-    color: white;
-    transform: translateY(-5px) scale(1.1);
-    box-shadow: 0 15px 35px rgba(22, 160, 133, 0.4);
+    /* Nincs hover effekt */
 }
 
 .task-type-button.active {
@@ -235,10 +221,7 @@ body {
 }
 
 .theories-button:hover {
-    background: linear-gradient(135deg, #7d3c98 0%, #8e44ad 100%);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-medium);
-    border-color: rgba(255, 255, 255, 0.3);
+    /* Nincs hover effekt */
 }
 
 /* Remove dropdown styles */
@@ -791,7 +774,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--button-hover);
+    /* Nincs hover effekt */
 }
 
 /* Selection color */
@@ -905,8 +888,7 @@ body {
 }
 
 .modal-nav:hover {
-    background: var(--primary-color);
-    transform: translateY(-50%) scale(1.1);
+    /* Nincs hover effekt */
 }
 
 .modal-nav.prev {
@@ -937,8 +919,7 @@ body {
 }
 
 .modal-close:hover {
-    background: #c0392b;
-    transform: scale(1.1);
+    /* Nincs hover effekt */
 }
 
 .modal-info {
@@ -1031,11 +1012,7 @@ body {
 }
 
 .pdf-button:hover {
-    background: linear-gradient(135deg, var(--primary-dark) 0%, #229954 100%);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-medium);
-    text-decoration: none;
-    color: white;
+    /* Nincs hover effekt */
 }
 
 /* EA Vizsga Section */
@@ -1063,11 +1040,7 @@ body {
 }
 
 .ea-download-button:hover {
-    background: linear-gradient(135deg, #d68910 0%, #e67e22 100%);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-medium);
-    text-decoration: none;
-    color: white;
+    /* Nincs hover effekt */
 }
 
 /* File Browser */
@@ -1112,11 +1085,7 @@ body {
 }
 
 .file-link:hover {
-    background: linear-gradient(135deg, var(--bg-light) 0%, #ffffff 100%);
-    border-color: var(--primary-color);
-    transform: translateX(5px);
-    text-decoration: none;
-    color: var(--primary-color);
+    /* Nincs hover effekt */
 }
 
 /* Folder Grid */
@@ -1135,8 +1104,7 @@ body {
 }
 
 .folder-item:hover {
-    box-shadow: var(--shadow-light);
-    border-color: var(--primary-color);
+    /* Nincs hover effekt */
 }
 
 .folder-header {
@@ -1153,7 +1121,7 @@ body {
 }
 
 .folder-header:hover {
-    background: linear-gradient(135deg, var(--primary-dark) 0%, #229954 100%);
+    /* Nincs hover effekt */
 }
 
 .folder-icon {
@@ -1314,8 +1282,7 @@ body {
 }
 
 .task-button:hover:not(.active) {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important;
-    border-color: #adb5bd !important;
+    /* Nincs hover effekt */
 }
 
 @media (max-width: 600px) {
@@ -1333,4 +1300,37 @@ body {
         min-width: 50px;
         font-size: 0.9em;
     }
+}
+
+/* Töröljük az összes hover effektet */
+*:hover {
+    /* Nincs hover effekt */
+}
+
+.task-type-button:hover {
+    /* Nincs hover effekt */
+}
+
+.pdf-button:hover {
+    /* Nincs hover effekt */
+}
+
+.theories-button:hover {
+    /* Nincs hover effekt */
+}
+
+.ea-download-button:hover {
+    /* Nincs hover effekt */
+}
+
+.content-image img:hover {
+    /* Nincs hover effekt */
+}
+
+.modal-close:hover {
+    /* Nincs hover effekt */
+}
+
+.modal-nav:hover {
+    /* Nincs hover effekt */
 } 
