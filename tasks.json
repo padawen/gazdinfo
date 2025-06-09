@@ -44,50 +44,60 @@
             ]
         },
         {
-            "id": "second_type", 
+            "id": "second_type",
             "name": "Második feladat típus",
             "description": "Ütemezés gráf Gantt diagramjának és komponens gráfjainak meghatározása",
-            "tasks": [
+            "subsections": [
                 {
-                    "id": 1,
-                    "question": {
-                        "text": "Add meg az alábbi ütemezés gráf Gantt diagramját és komponens gráfjait!",
-                        "image": "images/task_2/subtask_1/question.png"
-                    },
-                    "answer": {
-                        "image": "images/task_2/subtask_1/answer.png"
-                    }
+                    "name": "Ütemezés gráf",
+                    "tasks": [
+                        {
+                            "id": 1,
+                            "question": {
+                                "text": "Add meg az alábbi ütemezés gráf Gantt diagramját és komponens gráfjait!",
+                                "image": "images/task_2/subtask_1/question.png"
+                            },
+                            "answer": {
+                                "image": "images/task_2/subtask_1/answer.png"
+                            }
+                        },
+                        {
+                            "id": 4,
+                            "question": {
+                                "text": "Add meg az alábbi ütemezés gráf Gantt diagramját és komponens gráfjait!"
+                            },
+                            "answer": {
+                                "image": "images/task_2/subtask_4/answer.png"
+                            }
+                        }
+                    ]
                 },
                 {
-                    "id": 2,
-                    "question": {
-                        "text": "Add meg az alábbi recept gráfhoz egy helyes ütemezést és az ahhoz tartozó Gantt diagramot!",
-                        "image": "images/task_2/subtask_2/question.png"
-                    },
-                    "answer": {
-                        "image": "images/task_2/subtask_2/answer.png",
-                        "image2": "images/task_2/subtask_2/answer_2.png"
-                    }
-                },
-                {
-                    "id": 3,
-                    "question": {
-                        "text": "Az alábbi recept-gráffal adott problémán mutassuk be a Taszk alapú döntési stratégiát! Adjuk meg a keresési fát, részfeladatokat, illetve az optimális ütemezést!",
-                        "image": "images/task_2/subtask_3/question.png"
-                    },
-                    "answer": {
-                        "image": "images/task_2/subtask_3/answer.png",
-                        "image2": "images/task_2/subtask_3/answer_2.png"
-                    }
-                },
-                {
-                    "id": 4,
-                    "question": {
-                        "text": "Add meg az alábbi ütemezés gráf Gantt diagramját és komponens gráfjait!"
-                    },
-                    "answer": {
-                        "image": "images/task_2/subtask_4/answer.png"
-                    }
+                    "name": "Receptgráf",
+                    "tasks": [
+                        {
+                            "id": 2,
+                            "question": {
+                                "text": "Add meg az alábbi recept gráfhoz egy helyes ütemezést és az ahhoz tartozó Gantt diagramot!",
+                                "image": "images/task_2/subtask_2/question.png"
+                            },
+                            "answer": {
+                                "image": "images/task_2/subtask_2/answer.png",
+                                "image2": "images/task_2/subtask_2/answer_2.png"
+                            }
+                        },
+                        {
+                            "id": 3,
+                            "question": {
+                                "text": "Az alábbi recept-gráffal adott problémán mutassuk be a Taszk alapú döntési stratégiát! Adjuk meg a keresési fát, részfeladatokat, illetve az optimális ütemezést!",
+                                "image": "images/task_2/subtask_3/question.png"
+                            },
+                            "answer": {
+                                "image": "images/task_2/subtask_3/answer.png",
+                                "image2": "images/task_2/subtask_3/answer_2.png"
+                            }
+                        }
+                    ]
                 }
             ]
         },

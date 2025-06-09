@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
     <div class="container">
@@ -267,15 +268,97 @@
                 <div class="task-type-name">🎓 ${currentTaskType.name}</div>
                 <div class="task-type-description">${currentTaskType.description}</div>
             `;
-
-            // Update task type title
             document.getElementById('taskTypeTitle').textContent = currentTaskType.name;
+
+            // Ha subsections van, speciális megjelenítés
+            if (currentTaskType.subsections) {
+                // Szekció gombok létrehozása (első sor)
+                const navButtonsContainer = document.getElementById('taskNavButtons');
+                navButtonsContainer.innerHTML = '';
+                navButtonsContainer.style.display = '';
+                
+                // Első sor: szekció gombok
+                const sectionButtonsDiv = document.createElement('div');
+                sectionButtonsDiv.className = 'section-buttons';
+                sectionButtonsDiv.style.marginBottom = '10px';
+                
+                currentTaskType.subsections.forEach((section, sectionIdx) => {
+                    const button = document.createElement('button');
+                    button.className = 'task-nav-button section-button';
+                    button.textContent = section.name;
+                    button.title = section.name;
+                    button.onclick = () => {
+                        // Aktív szekció gomb kiemelése
+                        sectionButtonsDiv.querySelectorAll('.section-button').forEach(btn => btn.classList.remove('active'));
+                        button.classList.add('active');
+                        // Feladat gombok létrehozása ehhez a szekcióhoz
+                        createTaskButtons(sectionIdx);
+                        // Első feladatot mutatjuk
+                        showSubsectionTask(sectionIdx, 0);
+                    };
+                    if (sectionIdx === 0) button.classList.add('active');
+                    sectionButtonsDiv.appendChild(button);
+                });
+                navButtonsContainer.appendChild(sectionButtonsDiv);
+                
+                // Második sor: feladat gombok (számozottak)
+                const taskButtonsDiv = document.createElement('div');
+                taskButtonsDiv.className = 'task-buttons';
+                taskButtonsDiv.id = 'currentTaskButtons';
+                navButtonsContainer.appendChild(taskButtonsDiv);
+                
+                // Alapból az első szekciót és első feladatot mutatjuk
+                createTaskButtons(0);
+                showSubsectionTask(0, 0);
+            } else {
+                // Régi logika, ha nincs subsections
+                document.getElementById('taskNavButtons').style.display = '';
+                generateTaskNavButtons();
+                showTask(currentTaskIndex);
+            }
+        }
+
+        function createTaskButtons(sectionIdx) {
+            const section = currentTaskType.subsections[sectionIdx];
+            const taskButtonsDiv = document.getElementById('currentTaskButtons');
+            taskButtonsDiv.innerHTML = '';
             
-            // Generate task navigation buttons
-            generateTaskNavButtons();
+            section.tasks.forEach((task, taskIdx) => {
+                const button = document.createElement('button');
+                button.className = 'task-nav-button task-button';
+                button.textContent = (taskIdx + 1).toString();
+                button.title = `Feladat ${taskIdx + 1}`;
+                button.onclick = () => {
+                    // Aktív feladat gomb kiemelése
+                    taskButtonsDiv.querySelectorAll('.task-button').forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    // Feladat megjelenítése
+                    showSubsectionTask(sectionIdx, taskIdx);
+                };
+                if (taskIdx === 0) button.classList.add('active');
+                taskButtonsDiv.appendChild(button);
+            });
+        }
+
+        function showSubsectionTask(sectionIdx, taskIdx) {
+            const section = currentTaskType.subsections[sectionIdx];
+            const task = section.tasks[taskIdx];
+            const taskContainer = document.getElementById('taskContainer');
             
-            // Show first task
-            showTask(currentTaskIndex);
+            taskContainer.innerHTML = `
+                <div class="task-card">
+                    <div class="task-content">
+                        <div class="question-section">
+                            <div class="section-title">📝 Feladat</div>
+                            ${renderContent(task.question, 'question')}
+                        </div>
+                        <div class="answer-section">
+                            <div class="section-title">✅ Megoldás</div>
+                            ${renderContent(task.answer, 'answer')}
+                        </div>
+                    </div>
+                </div>
+            `;
         }
 
         function generateTaskNavButtons() {
