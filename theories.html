@@ -62,7 +62,7 @@
             <button class="modal-nav prev" onclick="prevModalImage()">‹</button>
             <img id="modalImage" class="modal-image" src="" alt="Nagyított kép">
             <button class="modal-nav next" onclick="nextModalImage()">›</button>
-
+            <div id="modalInfo" class="modal-info">1 / 1</div>
         </div>
     </div>
 
@@ -162,11 +162,36 @@
                 html += `<div class="answer-text">✅ ${formattedText}</div>`;
             }
             
+            // Handle multiple images
+            const images = [];
+            
+            // Check for single image
             if (answer.image) {
-                html += `<div class="answer-image">
-                    <img src="${answer.image}?t=${Date.now()}" alt="Válasz kép" 
-                         loading="lazy" data-image-path="${answer.image}" data-image-index="0">
-                </div>`;
+                images.push(answer.image);
+            }
+            
+            // Check for additional images (image_2, image_3, etc.)
+            let imageIndex = 2;
+            while (answer[`image_${imageIndex}`]) {
+                images.push(answer[`image_${imageIndex}`]);
+                imageIndex++;
+            }
+            
+            // Check for images array format
+            if (answer.images && Array.isArray(answer.images)) {
+                images.push(...answer.images);
+            }
+            
+            // Render all images vertically
+            if (images.length > 0) {
+                html += '<div class="answer-images">';
+                images.forEach((imagePath, index) => {
+                    html += `<div class="answer-image">
+                        <img src="${imagePath}?t=${Date.now()}" alt="Válasz kép ${index + 1}" 
+                             loading="lazy" data-image-path="${imagePath}" data-image-index="${index}">
+                    </div>`;
+                });
+                html += '</div>';
             }
             
             html += '</div>';
@@ -209,25 +234,52 @@
             });
         });
 
-        // Image Modal Functions (reused from main app)
-        function openImageModal(imagePath, index) {
-            modalImages = [imagePath];
-            currentModalIndex = 0;
+        // Image Modal Functions (enhanced for multiple images)
+        function openImageModal(imagePath, index, allImages = null) {
+            if (allImages && allImages.length > 1) {
+                modalImages = allImages;
+                currentModalIndex = index;
+            } else {
+                modalImages = [imagePath];
+                currentModalIndex = 0;
+            }
             
             const modal = document.getElementById('imageModal');
             const modalImage = document.getElementById('modalImage');
             const modalInfo = document.getElementById('modalInfo');
             
-            modalImage.src = imagePath + '?t=' + Date.now();
-            modalInfo.textContent = '1 / 1';
+            modalImage.src = modalImages[currentModalIndex] + '?t=' + Date.now();
+            modalInfo.textContent = `${currentModalIndex + 1} / ${modalImages.length}`;
             
             modal.classList.add('active');
             
-            // Hide navigation for single images
+            // Show/hide navigation based on number of images
             const prevBtn = modal.querySelector('.prev');
             const nextBtn = modal.querySelector('.next');
-            prevBtn.style.display = 'none';
-            nextBtn.style.display = 'none';
+            
+            if (modalImages.length > 1) {
+                prevBtn.style.display = 'flex';
+                nextBtn.style.display = 'flex';
+            } else {
+                prevBtn.style.display = 'none';
+                nextBtn.style.display = 'none';
+            }
+        }
+
+        function prevModalImage() {
+            if (modalImages.length > 1) {
+                currentModalIndex = (currentModalIndex - 1 + modalImages.length) % modalImages.length;
+                const modalImage = document.getElementById('modalImage');
+                modalImage.src = modalImages[currentModalIndex] + '?t=' + Date.now();
+            }
+        }
+
+        function nextModalImage() {
+            if (modalImages.length > 1) {
+                currentModalIndex = (currentModalIndex + 1) % modalImages.length;
+                const modalImage = document.getElementById('modalImage');
+                modalImage.src = modalImages[currentModalIndex] + '?t=' + Date.now();
+            }
         }
 
         function closeImageModal() {
@@ -239,15 +291,36 @@
         document.addEventListener('click', function(event) {
             if (event.target.tagName === 'IMG' && event.target.dataset.imagePath) {
                 const imagePath = event.target.dataset.imagePath;
-                openImageModal(imagePath, 0);
+                const imageIndex = parseInt(event.target.dataset.imageIndex) || 0;
+                
+                // Find all images in the same answer container
+                const answerContainer = event.target.closest('.answer-wrapper');
+                if (answerContainer) {
+                    const allImagesInAnswer = Array.from(answerContainer.querySelectorAll('img[data-image-path]'))
+                        .map(img => img.dataset.imagePath);
+                    
+                    if (allImagesInAnswer.length > 1) {
+                        openImageModal(imagePath, imageIndex, allImagesInAnswer);
+                    } else {
+                        openImageModal(imagePath, 0);
+                    }
+                } else {
+                    openImageModal(imagePath, 0);
+                }
             }
         });
 
         // Keyboard support
         document.addEventListener('keydown', function(event) {
             const modal = document.getElementById('imageModal');
-            if (modal.classList.contains('active') && event.key === 'Escape') {
-                closeImageModal();
+            if (modal.classList.contains('active')) {
+                if (event.key === 'Escape') {
+                    closeImageModal();
+                } else if (event.key === 'ArrowLeft') {
+                    prevModalImage();
+                } else if (event.key === 'ArrowRight') {
+                    nextModalImage();
+                }
             }
         });
 

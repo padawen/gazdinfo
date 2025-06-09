@@ -8,7 +8,8 @@
                 "text": "Írja le az S-gráfnál alkalmazott Branch and Bound (korlátozás és szétválasztás) eljárás korlátozó lépését/feltételeket!"
             },
             "answer": {
-                "image": "theories/1.png"
+                "image": "theories/1.png",
+                "image_2": "theories/1_1.png"
             }
         },
         {
@@ -35,7 +36,8 @@
                 "text": "A P gráfban milyen anyag típusú csúcsokat különböztetünk meg. 1-1 mondattal ismertesd is őket!"
             },
             "answer": {
-                "image": "theories/4.png"
+                "image": "theories/4.png",
+                "image_2": "theories/4_1.png"
             }
         },
         {

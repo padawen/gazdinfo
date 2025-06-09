@@ -118,13 +118,23 @@
                     }
                 },
                 {
-                    "id": 1,
+                    "id": 2,
                     "question": {
                         "text": "Az alábbi táblázatokban definiált folyamhálózat-szintézis problémához adja meg a matematikai modellt(cél: minimális költség).",
                         "image": "images/task_3/subtask_2/question.png"
                     },
                     "answer": {
                         "image": "images/task_3/subtask_2/answer.png"
+                    }
+                },
+                {
+                    "id": 3,
+                    "question": {
+                        "text": "Az alábbi táblázatokban részben definiált P-gráfnál adja meg az A,B,C és E anyagokra a matematikai feltételeket.",
+                        "image": "images/task_3/subtask_3/question.png"
+                    },
+                    "answer": {
+                        "image": "images/task_3/subtask_3/answer.png"
                     }
                 }
             ]
