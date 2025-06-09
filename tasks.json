@@ -209,6 +209,23 @@
                     }
                 }
             ]   
+        },
+        {
+            "id": "sixth_type", 
+            "name": "Hatodik feladat típus",
+            "description": "Reziduális gráf",
+            "tasks": [
+                {
+                    "id": 1,
+                    "question": {
+                        "text": "Adja meg a reziduális gráfot az alábbi hálózathoz.",
+                        "image": "images/task_6/subtask_1/question.png"
+                    },
+                    "answer": {
+                        "image": "images/task_6/subtask_1/answer.png"
+                    }
+                }
+            ]   
         }
     ]
 } 
