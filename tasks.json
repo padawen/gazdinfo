@@ -13,7 +13,8 @@
                         "image": "images/task_1/subtask_3/question.png"
                     },
                     "answer": {
-                        "image": "images/task_1/subtask_3/answer.png"
+                        "image": "images/task_1/subtask_3/answer.png",
+                        "image2": "images/task_1/subtask_3/answer_2.png"
                     }
                 },
                 {
@@ -26,7 +27,8 @@
                     "answer": {
                         "image": "images/task_1/subtask_2/answer.png",
                         "image2": "images/task_1/subtask_2/answer_2.png",
-                        "image3": "images/task_1/subtask_2/answer_3.png"
+                        "image3": "images/task_1/subtask_2/answer_3.png",
+                        "image4": "images/task_1/subtask_2/answer_4.png"
                     }
                 },
                 {
@@ -38,7 +40,8 @@
                     },
                     "answer": {
                         "text": "A maximális folyam probléma matematikai modellje a következő...",
-                        "image": "images/task_1/subtask_1/answer.png"
+                        "image": "images/task_1/subtask_1/answer.png",
+                        "image2": "images/task_1/subtask_1/answer_2.png"
                     }
                 }
             ]
@@ -183,8 +186,7 @@
                         "image": "images/task_5/subtask_1/question.png"
                     },
                     "answer": {
-                        "image": "images/task_5/subtask_1/answer.png",
-                        "image2": "images/task_5/subtask_1/answer_2.png"
+                        "image": "images/task_5/subtask_1/answer.png"
                     }
                 },
                 {
