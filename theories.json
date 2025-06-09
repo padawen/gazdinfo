@@ -32,7 +32,7 @@
         {
             "id": 4,
             "question": {
-                "text": "A P gráfban milyen anyag típusú csúcsokat különböztetünk meg. 1-1 mondattal ismertes is őket!"
+                "text": "A P gráfban milyen anyag típusú csúcsokat különböztetünk meg. 1-1 mondattal ismertesd is őket!"
             },
             "answer": {
                 "image": "theories/4.png"
@@ -63,6 +63,15 @@
             },
             "answer": {
                 "image": "theories/7.png"
+            }
+        },
+        {
+            "id":  8,
+            "question": {
+                "text": "MILP"
+            },
+            "answer": {
+                "image": "theories/8.png"
             }
         }
         
