@@ -324,15 +324,30 @@
             }, 100);
         }
 
-        function showTask(index) {
-            if (!currentTaskType || index < 0 || index >= currentTaskType.tasks.length) {
-                return;
-            }
-
-            const task = currentTaskType.tasks[index];
-            const container = document.getElementById('taskContainer');
+        function showTask(taskIndex) {
+            const task = currentTaskType.tasks[taskIndex];
+            const taskContainer = document.getElementById('taskContainer');
             
-            container.innerHTML = `
+            // Update task counter
+            document.getElementById('taskTypeTitle').textContent = currentTaskType.name;
+            
+            // Create task navigation buttons
+            const navButtonsContainer = document.getElementById('taskNavButtons');
+            navButtonsContainer.innerHTML = '';
+            
+            currentTaskType.tasks.forEach((t, index) => {
+                const button = document.createElement('button');
+                button.className = 'task-nav-button';
+                button.textContent = t.name || (index + 1).toString();
+                button.title = t.name || `Feladat ${index + 1}`;
+                button.onclick = () => selectTask(index, button);
+                if (index === taskIndex) {
+                    button.classList.add('active');
+                }
+                navButtonsContainer.appendChild(button);
+            });
+
+            taskContainer.innerHTML = `
                 <div class="task-card">
                     <div class="task-content">
                         <div class="question-section">
@@ -346,9 +361,6 @@
                     </div>
                 </div>
             `;
-
-            // Update active button
-            updateTaskNavButtons();
         }
 
         function updateTaskNavButtons() {
