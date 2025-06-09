@@ -1263,6 +1263,12 @@ body {
 }
 
 /* Szekció és feladat gombok stílusai */
+#taskNavButtons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .section-buttons {
     display: flex;
     flex-wrap: wrap;
