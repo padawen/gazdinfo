@@ -73,6 +73,15 @@
             "answer": {
                 "image": "theories/8.png"
             }
+        },
+        {
+            "id": 9,
+            "question": {
+                "text": "taszk / job shop / páros gráf / MILP / FIFO"
+            },
+            "answer": {
+                "image": "theories/9.png"
+            }
         }
         
     ]
