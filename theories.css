@@ -1,4 +1,4 @@
-/* Elméleti kérdések CSS - Természet téma */
+
 
 * {
     margin: 0;
@@ -36,7 +36,7 @@ body {
     color: var(--text-primary);
 }
 
-/* Main Container */
+
 .theories-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -59,7 +59,7 @@ body {
     z-index: 10;
 }
 
-/* Header */
+
 .theories-header {
     background: var(--header-gradient);
     color: white;
@@ -94,19 +94,19 @@ body {
 }
 
 .back-link {
-    color: rgba(255, 255, 255, 0.8);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white !important;
     text-decoration: none;
     font-size: 0.9rem;
-    font-weight: 500;
+    font-weight: 600;
     transition: var(--transition);
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-}
-
-.back-link:hover {
-    color: white;
-    transform: translateX(-3px);
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 20px;
+    box-shadow: var(--shadow-light);
+    border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
 .header-main {
@@ -136,7 +136,7 @@ body {
     font-style: italic;
 }
 
-/* Controls */
+
 .theories-controls {
     background: linear-gradient(135deg, #1a252f 0%, #2d3748 50%, #1a252f 100%);
     padding: 20px 40px;
@@ -167,12 +167,6 @@ body {
     gap: 8px;
 }
 
-.control-button:hover {
-    background: linear-gradient(135deg, var(--primary-dark) 0%, #229954 100%);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-medium);
-}
-
 .theories-counter {
     color: white;
     font-size: 1rem;
@@ -180,7 +174,7 @@ body {
     text-shadow: 0 2px 10px rgba(0,0,0,0.3);
 }
 
-/* Content */
+
 .theories-content {
     padding: 40px;
     background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
@@ -223,7 +217,7 @@ body {
     box-shadow: var(--shadow-medium);
 }
 
-/* Accordion Styles */
+
 .theories-list {
     display: flex;
     flex-direction: column;
@@ -237,10 +231,6 @@ body {
     border: 1px solid var(--border-color);
     overflow: hidden;
     transition: var(--transition);
-}
-
-.accordion-item:hover {
-    box-shadow: var(--shadow-medium);
 }
 
 .accordion-item.active {
@@ -273,10 +263,6 @@ body {
 
 .accordion-item.active .accordion-header::before {
     opacity: 1;
-}
-
-.accordion-header:hover {
-    background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%);
 }
 
 .question-content {
@@ -335,7 +321,7 @@ body {
     transition: var(--transition);
 }
 
-/* Accordion Body */
+
 .accordion-body {
     max-height: 0;
     overflow: hidden;
@@ -381,7 +367,7 @@ body {
     cursor: pointer;
     transition: var(--transition);
 }
-/* Image Modal (same as main app) */
+
 .image-modal {
     position: fixed;
     top: 0;
@@ -436,11 +422,6 @@ body {
     z-index: 1001;
 }
 
-.modal-close:hover {
-    background: #c0392b;
-    transform: scale(1.1);
-}
-
 .modal-info {
     position: absolute;
     bottom: 20px;
@@ -454,7 +435,7 @@ body {
     font-weight: 500;
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
     body {
         padding: 10px;
